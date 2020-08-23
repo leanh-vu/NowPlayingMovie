@@ -1,36 +1,109 @@
 <template>
   <div class="container">
-    <div>{{model}}</div>
-    <div>asdasd</div>
+    <div class='content-container inde-scroll scrollbar-light-blue'>
+      <div>{{currentMovieInfo.title}}</div>
+      <div>{{currentMovieInfo.original_language}}</div>
+      <div>{{currentMovieInfo.overview}}</div>
+      <div>{{currentMovieInfo.poster_path}}</div>
+      <div>{{currentMovieInfo.backdrop_path}}</div>
+      <div>{{currentMovieInfo.popularity}}</div>
+      <div>{{currentMovieInfo.adult}}</div>
+      <div>{{currentMovieInfo.vote_count}}</div>
+      <div>{{currentMovieInfo.vote_average}}</div>
+      <div>{{currentMovieInfo.release_date}}</div>
+      <router-link to="/">
+        <button class='button button-blue mb-05 button-fit'>to movie list</button>
+      </router-link>
+    </div>
   </div>
 </template>
 <style scoped>
+  .scrollbar-light-blue::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 5px; 
+    }
+
+  .scrollbar-light-blue::-webkit-scrollbar {
+    width: 9px;
+    background-color: #F5F5F5; 
+    }
+
+  .scrollbar-light-blue::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+    background-color: #ff4081; 
+    }
+
+  .inde-scroll {
+    position: relative;
+    overflow-y: scroll;
+    box-sizing: border-box
+  }
   .container {
-    width: 95vw;
-    height: 90vh;
+    width: 98vw;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-container {
+    width: 100%;
+    height: 95%;
+    background-color: rgba(255, 255, 255, .9);
+    border-radius: 5px;
   }
 </style>
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'Body',
   components: {
   },
   data () {
     return {
-        "title": "The Secret Garden",
-        "original_title": "The Secret Garden",
-        "original_language": "en",
-        "overview": "Mary Lennox is born in India to wealthy British parents who never wanted her. When her parents suddenly die, she is sent back to England to live with her uncle. She meets her sickly cousin, and the two children find a wondrous secret garden lost in the grounds of Misselthwaite Manor.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/5MSDwUcqnGodFTvtlLiLKK0XKS.jpg",
-        "backdrop_path": "https://image.tmdb.org/t/p/w500/8PK4X8U3C79ilzIjNTkTgjmc4js.jpg",
-        "popularity": 97.043,
-        "adult": false,
-        "vote_count": 101,
-        "vote_average": 7.3,
-        "release_date": "2020-07-08"
+      currentMovieInfo: {
+        title : '',
+        original_language : '',
+        overview : '',
+        poster_path : '',
+        backdrop_path : '',
+        popularity : '',
+        adult : '',
+        vote_count : '',
+        vote_average : '',
+        release_date : '',
+      }
     }
-  }
+  },
+  methods: {
+    getMovieInformation () {
+      const query = `{details(movieId: ${this.currentMovie.id}) {
+                        title
+                        original_language
+                        overview
+                        poster_path
+                        backdrop_path
+                        popularity
+                        adult
+                        vote_count
+                        vote_average
+                        release_date
+                    }}`
+      const url = "https://ion-movies.herokuapp.com/";
+      const opts = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query })
+      };
+      fetch(url, opts)
+        .then(res => res.json())
+        .then(res => {
+          this.moviesArray = res.data.details
+        })
+        .catch(console.error);
+    }
+  },
 }
 </script>

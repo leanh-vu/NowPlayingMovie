@@ -1,5 +1,6 @@
 <template>
   <div class='c'>
+    <top-bar></top-bar>
     <router-view/>
   </div>
 </template>
@@ -9,3 +10,12 @@
    height: 100%;
  }
 </style>
+
+<script>
+import TopBar from './components/TopBar.vue'
+export default {
+  components: {
+    'top-bar': TopBar
+  }
+}
+</script>

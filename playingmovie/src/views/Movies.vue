@@ -10,12 +10,12 @@
     </transition>
     <transition name='slide-fade'>
       <div v-if='isTextShow' class='content-container inde-scroll scrollbar-light-blue'>
-        <movie-card v-for='(v, k) in 100' v-bind:key='k'></movie-card>
+        <movie-card v-for='(v, k) in moviesArray' v-bind:key='k'
+                    :movieInfo="v"></movie-card>
       </div>
     </transition>
     <router-view/>
   </div>
-  
 </template>
 <style scoped>
   .logo-container {
@@ -93,30 +93,21 @@
   }
   .container {
     width: 98vw;
-    height: 100%;
+    height: 95%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 15%;
-    padding: 1em;
-    background-color: rgba(255, 255, 255, .3);
-    border-radius: 5px;
   }
   .content-container {
     width: 100%;
     height: 95%;
     background-color: rgba(255, 255, 255, .9);
     border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.2rem
   }
-  .button-fit {
-    width: 100%;
-  }
+  
 </style>
 <script>
   import MovieCard from '../components/MovieCard.vue'
@@ -125,41 +116,8 @@
     data () {
       return {
         isOpeningShow: false,
-        isTextShow: false,
-        moviesArray: [
-          {   
-              "id": "521034",
-              "title": "The Secret Garden",
-              "poster_path": "https://image.tmdb.org/t/p/w500/5MSDwUcqnGodFTvtlLiLKK0XKS.jpg",
-              "adult": false,
-              "vote_average": 7.3,
-              "release_date": "2020-07-08"
-          },
-          {   
-              "id": "521034",
-              "title": "The Secret Garden",
-              "poster_path": "https://image.tmdb.org/t/p/w500/5MSDwUcqnGodFTvtlLiLKK0XKS.jpg",
-              "adult": false,
-              "vote_average": 7.3,
-              "release_date": "2020-07-08"
-          },
-          {   
-              "id": "521034",
-              "title": "The Secret Garden",
-              "poster_path": "https://image.tmdb.org/t/p/w500/5MSDwUcqnGodFTvtlLiLKK0XKS.jpg",
-              "adult": false,
-              "vote_average": 7.3,
-              "release_date": "2020-07-08"
-          },
-          {   
-              "id": "521034",
-              "title": "The Secret Garden",
-              "poster_path": "https://image.tmdb.org/t/p/w500/5MSDwUcqnGodFTvtlLiLKK0XKS.jpg",
-              "adult": false,
-              "vote_average": 7.3,
-              "release_date": "2020-07-08"
-          },
-        ],
+        isTextShow: true,
+        moviesArray: [],
       }
     },
     methods: {
@@ -171,12 +129,35 @@
         setTimeout(() => {
           this.isTextShow = true  
         }, 1000)
-      }
-    },
+      },
+      updateMovieArray () {
+        const query = `{nowPlaying(page:1) {
+                          movies {
+                            id
+                            title
+                            poster_path
+                            vote_average
+                          }
+                        }}`
+        const url = "https://ion-movies.herokuapp.com/";
+        const opts = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query })
+        };
+        fetch(url, opts)
+          .then(res => res.json())
+          .then(res => {
+            this.moviesArray = res.data.nowPlaying.movies
+          })
+          .catch(console.error);
+              }
+          },
     mounted () {
-      setTimeout(() => {
-        this.displayOpening()
-      }, 1000)
+      // setTimeout(() => {
+      //   this.displayOpening()
+      // }, 1000)
+      this.updateMovieArray()
     },
     watch: {
       isOpeningShow: function () {
