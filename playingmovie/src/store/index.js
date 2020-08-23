@@ -6,16 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     currentMovie: {
-      id: '',
-      title: '',
-      language: '',
-      posterPath: '',
-      overView: '',
-      backdrop: '',
-      adult: '',
-      voteCount: '',
-      voteAverage: '',
-      releaseDay: '',
+      id: ''
     }
   },
   mutations: {

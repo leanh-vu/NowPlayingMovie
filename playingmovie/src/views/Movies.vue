@@ -9,7 +9,7 @@
       </div>
     </transition>
     <transition name='slide-fade'>
-      <div v-if='isTextShow' class='content-container inde-scroll scrollbar-light-blue'>
+      <div v-if='isTextShow' id='movie-list-container' @scroll="onScroll" class='content-container inde-scroll scrollbar-light-blue'>
         <movie-card v-for='(v, k) in moviesArray' v-bind:key='k'
                     :movieInfo="v"></movie-card>
       </div>
@@ -118,6 +118,8 @@
         isOpeningShow: false,
         isTextShow: true,
         moviesArray: [],
+        currentPage: 1,
+        inFetching: false,
       }
     },
     methods: {
@@ -131,7 +133,12 @@
         }, 1000)
       },
       updateMovieArray () {
-        const query = `{nowPlaying(page:1) {
+        if (this.inFetching == true) {
+          return
+        } else {
+          this.inFetching = true
+        }
+        const query = `{nowPlaying(page:${this.currentPage}) {
                           movies {
                             id
                             title
@@ -139,6 +146,7 @@
                             vote_average
                           }
                         }}`
+                        console.log(query)
         const url = "https://ion-movies.herokuapp.com/";
         const opts = {
           method: "POST",
@@ -148,11 +156,21 @@
         fetch(url, opts)
           .then(res => res.json())
           .then(res => {
-            this.moviesArray = res.data.nowPlaying.movies
+            this.moviesArray = this.moviesArray.concat(res.data.nowPlaying.movies)
+            this.inFetching = false
           })
-          .catch(console.error);
-              }
+          .catch(er => {
+            console.log(er)
+            this.inFetching = false
+          });
           },
+      onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
+        if (scrollTop + clientHeight >= scrollHeight) {
+          this.currentPage += 1
+          this.updateMovieArray()
+        }
+      }
+      },
     mounted () {
       // setTimeout(() => {
       //   this.displayOpening()
