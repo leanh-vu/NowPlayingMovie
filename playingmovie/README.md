@@ -1,6 +1,7 @@
 # Now Playing Movie
 ```
 - List and detail page
+- Interact with GraphQL API
 - Infinite loading in List page
 - Technology: VueJs, VueX, VueRouter, HTML, CSS, Javascript
 ```
