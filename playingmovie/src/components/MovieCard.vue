@@ -1,12 +1,12 @@
 <template>
   <div class='movie-card'>
-    <div class="z">
-      <img class='image' :alt="movieInfo.title" :src="movieInfo.poster_path" style="width:100%">
+    <div class="movie-card-content">
+      <img class='image' :alt="movieInfo.title" :src="movieInfo.poster_path">
       <div class="middle">
         <div class="text">{{movieInfo.title}}</div>
-        <div class="text">{{movieInfo.vote_average}}</div>
+        <div class="text vote">{{movieInfo.vote_average}}</div>
         <router-link class='link' to="/detail">
-            <div class='button button-orange' @click="test">Watch now!</div>
+            <div class='button button-orange' @click="updateCurrentMovieId">Watch now!</div>
         </router-link>
       </div>
     </div>
@@ -14,11 +14,10 @@
 </template>
 
 <style scoped>
-  .z {
+  .movie-card-content {
     position: relative;
     width: 100%;
     }
-
   .image {
     opacity: 1;
     display: block;
@@ -26,7 +25,7 @@
     height: auto;
     transition: .5s ease;
     backface-visibility: hidden;
-      border-radius: 10px;
+    border-radius: 10px;
   }
 
   .middle {
@@ -42,12 +41,12 @@
     min-width: 150px;
   }
 
-  .z:hover .image {
+  .movie-card-content:hover .image {
     /* background-color: rgba(0, 0, 0, 0.2); */
     box-shadow: 10px 10px grey;
   }
 
-  .z:hover .middle {
+  .movie-card-content:hover .middle {
     opacity: 1;
   }
 
@@ -57,6 +56,10 @@
     color: white;
     font-size: 1.5em;
     text-transform: uppercase;
+  }
+  .vote {
+    color: yellow;
+    font-weight: bold;
   }
   .movie-card {
     display: flex;
@@ -98,9 +101,11 @@ export default {
   components: {
   },
   methods: {
-    test () {
+    updateCurrentMovieId () {
+      /**
+       * Update store currentMovieId 
+       */
       this.$store.dispatch('updateCurrentMovie', {
-        fieldName: 'id',
         value: this.movieInfo.id,
     })
     }

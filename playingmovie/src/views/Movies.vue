@@ -3,7 +3,7 @@
     <transition name='jump'>
       <div v-if='isOpeningShow' class='opening-container'>
         <div class="logo-container">
-          <img src="../../public/mylogo.png" alt="Italian Trulli">
+          <img src="../../public/img/mylogo.png" alt="myLogo">
           <div class='cinema-text'>CINEMA</div>
         </div>
       </div>
@@ -116,28 +116,45 @@
     data () {
       return {
         isOpeningShow: false,
-        isTextShow: true,
+        isTextShow: false,
         moviesArray: [],
-        currentPage: 1,
+        currentPage: 0,
         inFetching: false,
       }
     },
     methods: {
       displayOpening () {
-        this.isOpeningShow = true
+        setTimeout(() => {
+          this.isOpeningShow = true
+          setTimeout(() => {
+            this.isOpeningShow = false
+            this.displayMovies()
+          }, 2000)
+        }, 2000)
       },
       displayMovies () {
-        this.isOpeningShow = false
         setTimeout(() => {
           this.isTextShow = true  
         }, 1000)
       },
+      display () {
+        if (localStorage.getItem('flag') != 'yes') {
+          localStorage.setItem('flag', 'yes')
+          this.displayOpening()
+        } else {
+          this.displayMovies()
+        }
+      },
       updateMovieArray () {
+        /**
+         * Get movie from API and append to current movie_aray
+         */
         if (this.inFetching == true) {
           return
         } else {
           this.inFetching = true
         }
+        this.currentPage += 1
         const query = `{nowPlaying(page:${this.currentPage}) {
                           movies {
                             id
@@ -146,7 +163,6 @@
                             vote_average
                           }
                         }}`
-                        console.log(query)
         const url = "https://ion-movies.herokuapp.com/";
         const opts = {
           method: "POST",
@@ -166,17 +182,14 @@
           },
       onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
         if (scrollTop + clientHeight >= scrollHeight) {
-          this.currentPage += 1
           this.updateMovieArray()
         }
       }
       },
     mounted () {
-      // setTimeout(() => {
-      //   this.displayOpening()
-      // }, 1000)
       this.updateMovieArray()
-    },
+      this.display()
+      },
     watch: {
       isOpeningShow: function () {
         setTimeout(() => {

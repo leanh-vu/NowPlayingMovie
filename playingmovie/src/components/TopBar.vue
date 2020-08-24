@@ -1,62 +1,38 @@
 <template>
     <div class="topnav">
-        <a class="active" href="#home">Home</a>
-        <a href="#news">News</a>
-        <div class="dropdown">
-        <span>Mouse over me</span>
-        <div class="dropdown-content">
-            <p>Hello World!</p>
-        </div>
-        </div>
-        <a href="#about">About</a>
+        <router-link to="/" class='p-0'>
+          <img class="navbar-logo" src="../../public/img/mylogo.png" alt="mylogo">
+        </router-link>
+        <input class='filter' placeholder="Filter">
     </div>
 </template>
 
 <style>
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+.filter {
+  border-radius: 10px;
+  margin-right: 2rem;
 }
 .topnav {
-  background-color: rgba(255, 124, 124, 0.37);
+  background-color: rgba(0, 0, 0, 0.5);
   overflow: hidden;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
   border-radius: 0 0 10px 10px;
 }
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
+.m-0 {
+  margin: 0
 }
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
+.p-0 {
+  padding: 0!important
+}
+.navbar-logo {
+  display: block;
+  height: 5vh;
+  transition: .5s ease;
+  padding-left: 2rem;
+}
+.navbar-logo :hover{
+    height:28vh
 }
 </style>
 

@@ -5,19 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentMovie: {
-      id: ''
-    }
+    currentMovieId: ''
   },
   mutations: {
     updateCurrentMovie (state, payload) {
-      state.currentMovie[payload.fieldName] = payload.value
+      state.currentMovieId = payload.value
     }
   },
   actions: {
     updateCurrentMovie ({commit}, payload) {
       commit('updateCurrentMovie', {
-        fieldName: payload.fieldName,
         value: payload.value
     })
     }
