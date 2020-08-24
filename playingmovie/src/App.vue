@@ -1,12 +1,12 @@
 <template>
-  <div class='c'>
+  <div class='app-content'>
     <top-bar></top-bar>
     <router-view/>
   </div>
 </template>
 
 <style>
- .c {
+ .app-content {
    height: 100%;
  }
 </style>

@@ -1,51 +1,33 @@
 <template>
   <div class="container">
-    <div class='content-container inde-scroll scrollbar'>
-      <div class="image-container" 
-           v-bind:style="{ 'background-image': 'url(' + movieInformation.backdrop_path + ')' }">
-           <img class='image' :alt="movieInformation.title" :src="movieInformation.poster_path">
-            <h1 class='title'>{{movieInformation.title}}</h1>
-      </div>
-      <div class='info-container'>
-        <div class='info-up'>
-          <div class='w-h'>
-            <strong>Language: </strong>
-            <span class='upper'>{{movieInformation.original_language}}</span>
+    <transition name='slide-fade'>
+      <div v-if='isTextShow' class='content-container inde-scroll scrollbar'>
+        <div class="image-container" 
+            v-bind:style="{ 'background-image': 'url(' + movieInformation.backdrop_path + ')' }">
+            <img class='image' :alt="movieInformation.title" :src="movieInformation.poster_path">
+              <h1 class='title'>{{movieInformation.title}}</h1>
+        </div>
+        <div class='info-container'>
+          <div class='info-up'>
+            <div class='w-h'>
+              <strong>Language: </strong>
+              <span class='upper'>{{movieInformation.original_language}}</span>
+            </div>
+            <div v-if='movieInformation.adult' class='w-h adult'>18+</div>
+            <div class='w-h'><strong>Vote:</strong>  {{movieInformation.vote_average + ' (' + movieInformation.vote_count + ' votes)'}}</div>
+            <div class='w-h'><strong>Release date:</strong>  {{movieInformation.release_date}}</div>
           </div>
-          <div v-if='movieInformation.adult' class='w-h adult'>18+</div>
-          <div class='w-h'><strong>Vote:</strong>  {{movieInformation.vote_average + ' (' + movieInformation.vote_count + ' votes)'}}</div>
-          <div class='w-h'><strong>Release date:</strong>  {{movieInformation.release_date}}</div>
-        </div>
-        <div class='info-down'>
-          <div>{{movieInformation.overview}}</div>
+          <div class='info-down'>
+            <div>{{movieInformation.overview}}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
+    <router-view/>
+
   </div>
 </template>
 <style scoped>
-  .scrollbar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
-    background-color: #F5F5F5;
-    border-radius: 5px; 
-    }
-
-  .scrollbar::-webkit-scrollbar {
-    width: 9px;
-    background-color: #F5F5F5; 
-    }
-
-  .scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
-    background-color: #ff4081; 
-    }
-
-  .inde-scroll {
-    position: relative;
-    overflow-y: scroll;
-    box-sizing: border-box
-  }
   .container {
     width: 98vw;
     height: 95%;
@@ -123,6 +105,7 @@ export default {
   },
   data () {
     return {
+      isTextShow: false,
       movieInformation: {
         id: '',
         title: '',
@@ -174,6 +157,9 @@ export default {
   },
   mounted () {
     this.getMovieInformation()
+    setTimeout(() => {
+      this.isTextShow = true
+    }, 500)
   }
 }
 </script>

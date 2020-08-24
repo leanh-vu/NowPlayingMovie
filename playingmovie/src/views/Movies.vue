@@ -9,9 +9,9 @@
       </div>
     </transition>
     <transition name='slide-fade'>
-      <div v-if='isTextShow' id='movie-list-container' @scroll="onScroll" class='content-container inde-scroll scrollbar-light-blue'>
-        <movie-card v-for='(v, k) in moviesArray' v-bind:key='k'
-                    :movieInfo="v"></movie-card>
+      <div v-if='isTextShow' id='movie-list-container' @scroll="onScroll" class='content-container inde-scroll scrollbar'>
+        <movie-card v-for='(movie, key) in moviesArray' v-bind:key='key'
+                    :movieInfo="movie"></movie-card>
       </div>
     </transition>
     <router-view/>
@@ -41,56 +41,7 @@
     justify-content: center;
     align-items: center;
   }
-  .slide-fade-enter-active {
-    transition: all .3s ease;
-  }
-  .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
-  .slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
-    transform: translateX(10px);
-    opacity: 0;
-  }
-  .jump-enter-active {
-    animation: jump-in 0.5s;
-  }
-  .jump-leave-active {
-    animation: jump-in 0.5s reverse;
-  }
-  @keyframes jump-in {
-    0% {
-      transform: scale(0);
-    }
-    50% {
-      transform: scale(1.5);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  .scrollbar-light-blue::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
-    background-color: #F5F5F5;
-    border-radius: 5px; 
-    }
 
-  .scrollbar-light-blue::-webkit-scrollbar {
-    width: 9px;
-    background-color: #F5F5F5; 
-    }
-
-  .scrollbar-light-blue::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
-    background-color: #ff4081; 
-    }
-
-  .inde-scroll {
-    position: relative;
-    overflow-y: scroll;
-    box-sizing: border-box
-  }
   .container {
     width: 98vw;
     height: 95%;
@@ -135,7 +86,7 @@
       displayMovies () {
         setTimeout(() => {
           this.isTextShow = true  
-        }, 1000)
+        }, 500)
       },
       display () {
         if (localStorage.getItem('flag') != 'yes') {
@@ -191,11 +142,6 @@
       this.display()
       },
     watch: {
-      isOpeningShow: function () {
-        setTimeout(() => {
-          this.displayMovies()
-        }, 3000)
-      }
     },
     components: {
       'movie-card': MovieCard
