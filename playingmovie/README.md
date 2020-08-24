@@ -1,4 +1,9 @@
-# playingmovie
+# Now Playing Movie
+```
+- List and detail page
+- Infinite loading in List page
+- Technology: VueJs, VueX, VueRouter, HTML, CSS, Javascript
+```
 
 ## Project setup
 ```
