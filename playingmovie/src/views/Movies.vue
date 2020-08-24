@@ -41,7 +41,6 @@
     justify-content: center;
     align-items: center;
   }
-
   .container {
     width: 98vw;
     height: 95%;
@@ -88,7 +87,11 @@
           this.isTextShow = true  
         }, 500)
       },
-      display () {
+      display() {
+        /**
+         * Display opening only when users first enter the page
+         * To re-see the opening, clear the cookie (local storage)
+         */
         if (localStorage.getItem('flag') != 'yes') {
           localStorage.setItem('flag', 'yes')
           this.displayOpening()
@@ -98,7 +101,7 @@
       },
       updateMovieArray () {
         /**
-         * Get movie from API and append to current movie_aray
+         * Get movie_array from API and append to current movie_aray
          */
         if (this.inFetching == true) {
           return

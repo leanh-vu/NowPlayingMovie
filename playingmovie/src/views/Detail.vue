@@ -130,6 +130,9 @@ export default {
   },
   methods: {
     getMovieInformation () {
+      /**
+       * Get movie information from API
+       */
       const query = `{details(movieId: ${this.id}) {
                         title
                         original_language
