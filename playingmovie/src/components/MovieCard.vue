@@ -17,7 +17,7 @@
   .movie-card-content {
     position: relative;
     width: 100%;
-    }
+  }
   .image {
     opacity: 1;
     display: block;
@@ -28,7 +28,6 @@
     border-radius: 10px;
     border: white 5px solid
   }
-
   .middle {
     transition: .5s ease;
     opacity: 0;
@@ -45,7 +44,6 @@
   .movie-card-content:hover .middle {
     opacity: 1;
   }
-
   .text {
     background-color: black;
     opacity: 0.8;
@@ -72,23 +70,10 @@
     text-transform: uppercase;
     transition: background-color 0.2s;
     transition-timing-function: ease-out;
-    
   }
   .link {
     text-decoration: none;
   }
-  .button-orange {
-    border: 1px #ffa06d solid;
-    background-color: #ff6e40;
-  }
-  .button-orange:hover {
-    border: #c53d13 1px solid;
-    background-color: #c53d13
-  }
-  .button-orange:focus {
-    outline:none;
-    background-color: #c53d13;
-}
 </style>
 <script>
 
