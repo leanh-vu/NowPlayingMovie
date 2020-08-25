@@ -4,7 +4,7 @@
       <img class='image' :alt="movieInfo.title" :src="movieInfo.poster_path">
       <div class="middle">
         <div class="text">{{movieInfo.title}}</div>
-        <div class="text vote">{{movieInfo.vote_average}}</div>
+        <div class="text vote">{{movieInfo.vote_average + ' ★'}}</div>
         <router-link class='link' to="/detail">
             <div class='button button-orange' @click="updateCurrentMovieId">Watch now!</div>
         </router-link>
@@ -26,6 +26,7 @@
     transition: .5s ease;
     backface-visibility: hidden;
     border-radius: 10px;
+    border: white 5px solid
   }
 
   .middle {
@@ -39,13 +40,8 @@
     text-align: center;
     width: 15vw;
     min-width: 150px;
+    margin-left: 5px;
   }
-
-  .movie-card-content:hover .image {
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    box-shadow: 10px 10px grey;
-  }
-
   .movie-card-content:hover .middle {
     opacity: 1;
   }

@@ -51,8 +51,7 @@
   .content-container {
     width: 100%;
     height: 95%;
-    background-color: rgba(255, 255, 255, .9);
-    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0);
     display: flex;
     flex-wrap: wrap;
     margin: 0.2rem
