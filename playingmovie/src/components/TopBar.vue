@@ -1,23 +1,26 @@
 <template>
     <div class="topnav">
-        <router-link to="/" class='p-0'>
+        <router-link to="/" class='p-0 navbar-logo'>
           <img class="navbar-logo" src="../../public/img/mylogo.png" alt="mylogo">
         </router-link>
-        <input class='filter' placeholder="Filter">
+        <input class='filter' placeholder="Search">
     </div>
 </template>
 
 <style>
 .filter {
-  border-radius: 10px;
-  margin-right: 2rem;
+  border: none;
+  margin-right: 1rem;
+}
+input:focus{
+  outline: none;
 }
 .topnav {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, .9);
   overflow: hidden;
   display: flex;
   justify-content: space-between;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 5px 5px;
 }
 .m-0 {
   margin: 0
@@ -32,7 +35,7 @@
   padding-left: 2rem;
 }
 .navbar-logo :hover{
-    height:28vh
+  transform: scale(1.2);
 }
 </style>
 
