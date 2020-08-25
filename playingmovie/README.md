@@ -3,6 +3,7 @@
 - List and detail page
 - Interact with GraphQL API
 - Infinite loading in List page
+- To see the opening screen, use **localStorage.removeItem('flag')** and reload the page
 - Technology: VueJs, VueX, VueRouter, HTML, CSS, Javascript
 ```
 
